@@ -8,7 +8,6 @@ export const token = process.env.TELEGRAM_TOKEN_API;
 export const enableStats = process.env.ENABLE_STATS === 'true'
 export const dataBaseLogging = process.env.DB_LOGGING === 'true'
 
-
 /**
  * Первоначальные команды бота
  * @type {[{description: string, command: string},{description: string, command: string},{description: string, command: string},{description: string, command: string}]}
