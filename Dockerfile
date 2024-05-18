@@ -15,7 +15,6 @@ COPY . .
 
 RUN npm run build
 
-
 VOLUME [ "/app/tg_bot/db" ]
 
 ENV TELEGRAM_TOKEN_API=''
@@ -23,4 +22,4 @@ ENV ENABLE_STATS='false'
 ENV DB_LOGGING='false'
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
 
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["node", "dist/index.js"]
