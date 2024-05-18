@@ -31,6 +31,7 @@
         "puppeteer": "^22.8.0",
         "puppeteer-core": "^22.9.0",
         "sequelize": "^6.28.0",
-        "sqlite3": "^5.1.7"
+        "sqlite3": "^5.1.7",
+        "youtube-dl-exec": "^3.0.2"
     }
 }

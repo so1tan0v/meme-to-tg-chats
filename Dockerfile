@@ -13,6 +13,9 @@ RUN npm install --production
 
 COPY . .
 
+RUN npm run build
+
+
 VOLUME [ "/app/tg_bot/db" ]
 
 ENV TELEGRAM_TOKEN_API=''
