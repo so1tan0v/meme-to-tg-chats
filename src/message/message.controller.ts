@@ -1,26 +1,29 @@
-const {bot} = require("../app.telegram.js");
-const {Users} = require("../users/Users.js");
-const cheerio = require('cheerio');
-const download = require('download')
-const {fetchPageContent} = require("../browser/browser");
-const {Users_Stats} = require("../user_stats/Users_Stats");
-const {enableStats} = require("../static");
+import {UsersService} from "../users/users.service";
+import {UsersStatsService} from "../user_stats/user_stats.service";
+import TelegramBot from "node-telegram-bot-api";
+import {bot} from "../bot/bot";
+import {fetchPageContent} from "../browser/browser";
+import * as cheerio from "cheerio";
+import {enableStats} from "../static";
+import download from 'download'
 
-
-module.exports = async function(msg) {
+export async function messageController(msg: TelegramBot.Message) {
     const text   = msg.text;
-    const chatId = msg.from.id;
+    const chatId = msg?.from?.id;
 
-    let user = await Users.getByChatId(chatId),
+    if(!chatId)
+        return;
+
+    let user = await UsersService.getByChatId(chatId),
         userId = user?.data?.dataValues?.id,
         userName = user?.data?.dataValues?.username ? user.data.dataValues.username : (msg?.chat?.username ?? 'НЕИЗВЕСТНЫЙ ПОЛЬЗОВАТЕЛЬ');
 
     if(!user) {
-        user = await Users.create({
-            lastName  : msg.chat.first_name,
-            firstName : msg.chat.last_name,
-            username  : msg.chat.username,
-            chatId,
+        await UsersService.create({
+            lastName: '',
+            chatId: 12,
+            username: '123',
+            firstName: '123',
         });
     }
     try {
@@ -31,30 +34,22 @@ module.exports = async function(msg) {
 В случае, если вы отправите ссылку на видео из instagram, то бот вернет видео с вашим мемом всем тем, кто подписался на
     `;
                 await bot.sendMessage(chatId, startMessage, {parse_mode :  'Markdown'});
-
-                if(!user) {
-                    user = await Users.create({
-                        lastName  : msg.chat.first_name,
-                        firstName : msg.chat.last_name,
-                        username  : msg.chat.username,
-                        chatId,
-                    });
-                }
                 return;
             case '/stats':
-                const allStats = await Users_Stats.getAllStatsWithUser();
-                let statsData = [];
+                const allStats = await UsersStatsService.getAllStatsWithUser();
+                let statsData: string[] = [];
                 allStats.forEach(stat => {
                     const user = stat.dataValues;
-                    const userStats = stat?.Users_Stats[0]?.dataValues ?? {};
+                    // @ts-ignore
+                    const userStats = user?.Users_Stats[0]?.dataValues ?? {};
                     if(user.username)
                         statsData.push(`@${user?.username} - ${userStats?.statsCount ?? 0}`);
                 })
-                await bot.sendMessage(chatId, `*Статистика по мемам:* \n${statsData.join(`\n`)}`, {parse_mode: 'Markdown'});
+                await bot.sendMessage(chatId, `*Статистика по мемам (Кто отправил - Сколько отправил:* \n${statsData.join(`\n`)}`, {parse_mode: 'Markdown'});
                 break;
             default:
-                const allUsers = await Users.getAllUsers();
-                if(text.indexOf('http') === 0) {
+                const allUsers = await UsersService.getAllUsers();
+                if(text && text.indexOf('http') === 0) {
                     if(text.indexOf('instagram') === -1) {
                         await bot.sendMessage(chatId, 'Эта ссылка не из instagram', {parse_mode :  'Markdown'});
                         return;
@@ -78,9 +73,9 @@ module.exports = async function(msg) {
 
                     urlVideo = $video.attr('src');
 
-                    if(urlVideo) {
+                    if(urlVideo && userId) {
                         if(enableStats)
-                            await Users_Stats.create({
+                            await UsersStatsService.create({
                                 user_id: userId,
                                 url: text
                             })
@@ -107,6 +102,6 @@ module.exports = async function(msg) {
                 return;
         }
     } catch (e) {
-        await bot.sendMessage(chatId, 'Произошел отвал, пиши @so1tan0v');
+        await bot.sendMessage(chatId, 'Произошел отвал, пиши @so1tan0v ```' + JSON.stringify(e) + '```', {parse_mode: 'Markdown'});
     }
 }
