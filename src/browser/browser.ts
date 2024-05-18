@@ -1,8 +1,8 @@
-const puppeteer = require('puppeteer');
+import puppeteer from "puppeteer";
 
-async function fetchPageContent(url) {
+export async function fetchPageContent(url: string) {
     const browser = await puppeteer.launch({
-        executablePath: process.env.CHROME_PATH ?? null,
+        executablePath: process.env.CHROME_PATH ?? '',
         headless       : true,
         args           : ['--no-sandbox', '--disable-dev-shm-usage'],
     });
@@ -13,8 +13,4 @@ async function fetchPageContent(url) {
     await browser.close();
 
     return content;
-}
-
-module.exports = {
-    fetchPageContent
 }
