@@ -1,0 +1,6 @@
+.ideamc
+.idea
+node_modules
+db/*
+
+.env
