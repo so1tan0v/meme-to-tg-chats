@@ -1,1 +1,57 @@
-{"name":"solt-meme-tg_bot","version":"0.0.3","description":"","main":"index.js","scripts":{"start":"node dist/index.js","dev":"cross-env NODE_ENV=develop nodemon src/index.ts","build":"tsc","lint":"eslint .","lint:fix":"eslint . --fix","format":"prettier --write ."},"author":"Aleksandr Soltanov","license":"ISC","devDependencies":{"@babel/core":"^7.24.5","@babel/eslint-parser":"^7.24.5","@types/node":"^20.12.12","@types/sequelize":"^4.28.20","@typescript-eslint/eslint-plugin":"^7.9.0","@typescript-eslint/parser":"^7.9.0","babel-eslint":"^10.1.0","cross-env":"^7.0.3","eslint":"^8.57.0","eslint-config-prettier":"^9.1.0","eslint-plugin-prettier":"^5.1.3","eslint-plugin-unused-imports":"^3.2.0","nodemon":"^2.0.20","prettier":"^3.2.5","ts-node":"^10.9.2","typescript":"^5.4.5"},"dependencies":{"@types/cheerio":"^0.22.35","@types/dotenv":"^8.2.0","@types/download":"^8.0.5","@types/node-telegram-bot-api":"^0.64.6","axios":"^1.6.8","cheerio":"^1.0.0-rc.12","dotenv":"^16.4.5","download":"^8.0.0","node-telegram-bot-api":"^0.60.0","puppeteer":"^22.8.0","puppeteer-core":"^22.9.0","sequelize":"^6.28.0","sqlite3":"^5.1.7","youtube-dl-exec":"^3.0.2"}}
+{
+  "name": "solt-meme-tg_bot",
+  "version": "0.0.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "cross-env NODE_ENV=develop nodemon src/index.ts",
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint . --fix"
+    }
+  },
+  "author": "Aleksandr Soltanov",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.24.5",
+    "@babel/eslint-parser": "^7.24.5",
+    "@types/node": "^20.12.12",
+    "@types/sequelize": "^4.28.20",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-unused-imports": "^3.2.0",
+    "husky": "^9.0.11",
+    "nodemon": "^2.0.20",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/dotenv": "^8.2.0",
+    "@types/download": "^8.0.5",
+    "@types/node-telegram-bot-api": "^0.64.6",
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "download": "^8.0.0",
+    "node-telegram-bot-api": "^0.60.0",
+    "puppeteer": "^22.8.0",
+    "puppeteer-core": "^22.9.0",
+    "sequelize": "^6.28.0",
+    "sqlite3": "^5.1.7",
+    "youtube-dl-exec": "^3.0.2"
+  }
+}
