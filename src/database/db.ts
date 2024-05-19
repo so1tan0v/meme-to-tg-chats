@@ -1,5 +1,5 @@
 import {Sequelize} from "sequelize";
-import {dataBaseLogging} from "../static";
+import {dataBaseLogging} from "../config/config";
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',

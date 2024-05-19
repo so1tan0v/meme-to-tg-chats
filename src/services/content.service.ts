@@ -1,7 +1,7 @@
-import {fetchPageContent} from "../browser/browser";
 import * as cheerio from "cheerio";
 import download from "download";
 import youtubeDl from "youtube-dl-exec";
+import {BrowserService} from "./browser.service";
 
 interface IGetVideoResult {
     success: boolean
@@ -10,6 +10,12 @@ interface IGetVideoResult {
 }
 
 export class ContentService {
+    static isUrl (url: string): boolean {
+        return !!(url
+            && url.indexOf('http') === 0
+            && url.split(' ').length === 1);
+    }
+
     static async getFileFromInstagram (url: string) {
         let result: IGetVideoResult = {
             success: true,
@@ -19,7 +25,7 @@ export class ContentService {
 
         let siteContent;
         try {
-            siteContent = await fetchPageContent(url);
+            siteContent = await BrowserService.fetchPageContent(url);
         } catch (e) {
             result.success = false
             result.message = 'При открытии ссылки с видео:\n ``` ' + JSON.stringify(e) + '```';
@@ -83,12 +89,15 @@ export class ContentService {
             message: null
         };
 
-        if(url && url.indexOf('http') === 0) {
-            if(url.indexOf('instagram') !== -1) {
-                result = await this.getFileFromInstagram(url)
-            } else if(url.indexOf('youtube') !== -1) {
-                result = await this.getFileFromYouTube(url)
-            }
+        if(!ContentService.isUrl(url)) {
+            result.success = false
+            result.message = 'Это не ссылка.';
+        }
+
+        if(url.indexOf('instagram') !== -1) {
+            result = await this.getFileFromInstagram(url)
+        } else if(url.indexOf('youtube') !== -1) {
+            result = await this.getFileFromYouTube(url)
         }
 
         return result

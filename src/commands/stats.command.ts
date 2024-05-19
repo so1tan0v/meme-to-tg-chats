@@ -1,15 +1,8 @@
 import TelegramBot from "node-telegram-bot-api";
-import {UsersStatsService} from "../user_stats/user_stats.service";
+import {UsersStatsService} from "../services/user_stats.service";
+import {bot} from "../bot";
 
-export async function start(bot: TelegramBot, chatId: number) {
-    const startMessage = `
-Вы подписались на мемы. 
-В случае, если вы отправите ссылку на видео из instagram, то бот вернет видео с вашим мемом всем тем, кто подписался на
-`;
-    await bot.sendMessage(chatId, startMessage, {parse_mode :  'Markdown'});
-}
-
-export async function stats(bot: TelegramBot, chatId: number) {
+export async function statsCommand(chatId: number) {
     const allStats = await UsersStatsService.getAllStatsWithUser();
     let statsData: string[] = [];
     allStats.forEach(stat => {

@@ -1,7 +1,7 @@
 import { Model, DataTypes, Optional, HasMany } from 'sequelize';
 import { sequelize } from '../db';
 import Users_Stats from "./Users_Stats";
-import {UsersStatsService} from "../../user_stats/user_stats.service";
+import {UsersStatsService} from "../../services/user_stats.service";
 
 export interface UserAttributes {
     Users_Stats?: UsersStatsService;
