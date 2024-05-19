@@ -6,11 +6,11 @@ dotenv.config({
 })
 
 import {sequelize} from "./database/db";
-import {botCommands, token} from "./static";
-import {messageController} from "./message/message.controller";
-import {bot} from './bot/bot'
+import {botCommands, token} from "./config/config";
+import {bot} from "./bot";
 import TelegramBot from "node-telegram-bot-api";
-import {messageInChannelController} from "./message/message-in-channel.controller";
+import {channelChatController} from "./controllers/channel-chat.controller";
+import {localChatController} from "./controllers/local-chat.controller";
 
 const start = async () => {
 
@@ -28,9 +28,9 @@ const start = async () => {
 
         try {
             if (msg.chat.type === 'private') {
-                return messageController(msg);
+                return localChatController(msg);
             } else if (msg.chat.type === 'group' || msg.chat.type === 'supergroup' || msg.chat.type === 'channel') {
-                return messageInChannelController(msg)
+                return channelChatController(msg)
             }
         } catch (e) {
             console.error(e)
