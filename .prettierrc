@@ -1,0 +1,1 @@
+{    "singleQuote": true,    "tabWidth": 4,    "endOfLine": "cr",    "semi": true,    "operatorLinebreak": "before",    "printWidth": 100,    "useTabs": false}
