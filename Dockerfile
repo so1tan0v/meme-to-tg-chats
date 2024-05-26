@@ -22,4 +22,4 @@ ENV ENABLE_STATS='false'
 ENV DB_LOGGING='false'
 ENV CHROME_PATH=/usr/bin/google-chrome-stable
 
-ENTRYPOINT ["node", "dist/index.js"]
+ENTRYPOINT [ "./start.sh" ]
