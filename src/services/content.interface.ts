@@ -1,0 +1,1 @@
+import { FormatNote } from 'youtube-dl-exec';export interface Quality {    url: string;    ext: string;    resolution: string;    format_note: FormatNote | undefined;    filesize: number | null | undefined;    code: string;}
